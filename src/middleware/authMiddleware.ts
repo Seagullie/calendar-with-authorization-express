@@ -9,7 +9,9 @@ interface JwtPayload {
 export interface AuthRequest extends Request {
   user?: IUser;
 }
-
+/**
+ * Middleware to check if the request has a valid JWT token
+ */
 const authMiddleware = async (
   req: AuthRequest,
   res: Response,
