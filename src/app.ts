@@ -4,10 +4,16 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import eventRoutes from "./routes/eventRoutes";
 
+import cookieParser from "cookie-parser";
+import cors from "cors";
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+app.use(cookieParser());
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
@@ -21,6 +27,7 @@ mongoose
       // If using mongoose v6, no need for useCreateIndex.
     } as mongoose.ConnectOptions
   )
+  .then(() => console.log("MongoDB connected"))
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

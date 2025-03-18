@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Launch TypeScript",
       "preLaunchTask": "tsc: build - tsconfig.json",
-      "program": "${workspaceFolder}/src/server.ts",
+      "program": "${workspaceFolder}/src/app.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "sourceMaps": true,
       "runtimeArgs": ["-r", "ts-node/register"],

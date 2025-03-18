@@ -7,13 +7,20 @@ const router = Router();
 
 // Register new user
 router.post("/register", async (req: Request, res: Response) => {
-  const { email, password, name } = req.body;
+  // delete all users for debugging purposes
+  // await User.deleteMany({});
+
+  const { email, password } = req.body;
+
+  console.log("new user is registering with these params");
+  console.log(`email: ${email} password: ${password}`);
+
   try {
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
-    user = new User({ email, password, name });
+    user = new User({ email, password });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     await user.save();
@@ -23,7 +30,7 @@ router.post("/register", async (req: Request, res: Response) => {
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    res.json({ token, user: email });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
@@ -46,7 +53,7 @@ router.post("/login", async (req: Request, res: Response) => {
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    res.json({ token, user: email });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
